@@ -1,0 +1,49 @@
+<div class="para" *ngIf="students.length==0">
+    <p>
+        No student data available
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
+            Create new Student
+          </button>
+          <app-add></app-add>
+    </p>
+</div>
+<div class="table-responsive styleTable" *ngIf="students.length>0">
+    <table class="table table-bordered table-dark ">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Age</th>
+        <th scope="col">ID</th>
+        <th scope="col">Roll</th>
+        <th scope="col">isMale</th>
+        <th scope="col">Date</th>
+        <th scope="col">Action1</th>
+        <th scope="col">Action2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of students">
+       
+        <td>{{student.name}}</td>
+        <td>{{student.email}}</td>
+        <td>{{student.age}}</td>
+        <td>{{student.id}}</td>
+        <td>{{student.rollNo}}</td>
+        <td>{{student.isMale}}</td>
+        <td>{{student.date}}</td>
+        <td>
+            <button class="btn btn-danger" (click)="onDelete(student.id)"> Delete</button>
+        </td>
+        <td>
+            <button class="btn btn-primary" (click)="onUpdate(student.id)"
+             data-toggle="modal" data-target=".update">
+                Update
+              </button>
+              <app-update></app-update>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+  
+ </div>

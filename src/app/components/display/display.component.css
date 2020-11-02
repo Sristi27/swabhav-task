@@ -1,0 +1,35 @@
+.styleTable
+{
+   width:95%;
+   margin:10px auto;
+ 
+}
+.styleTable th
+{
+   text-align: center;
+}
+.styleTable td:first-child
+{
+   text-transform: capitalize;
+}
+.first button:hover{
+    color:white
+}
+ .first button{
+     border: 1px solid black;
+     border-radius: 5px;
+ }
+ 
+.first
+{
+text-align: center;
+width: 20%;
+margin:50px auto;
+}
+
+.para p
+{
+   text-align: center;
+   font-size: large;
+   margin-top: 60px;
+}
