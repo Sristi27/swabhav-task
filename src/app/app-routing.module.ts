@@ -13,9 +13,11 @@ const routes: Routes = [
   //   component:HomeComponent
   // },
 
-  {path:"",
-  pathMatch:"full",
+  {path:"display",
   component:DisplayComponent
+},
+{path:"",
+  component:HomeComponent
 },
 {
   path:"delete/:id",
