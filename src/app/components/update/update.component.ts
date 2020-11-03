@@ -12,7 +12,8 @@ import { DataService } from 'src/app/services/data.service';
 export class UpdateComponent implements OnInit {
 
   form:FormGroup;
-  student_id=""
+  student_id="";
+  male="";
 
   constructor(private activatedRoute: ActivatedRoute, private data: DataService,private router:Router) {
 
@@ -22,9 +23,12 @@ export class UpdateComponent implements OnInit {
       name: new FormControl(null, { validators: [Validators.required] }),
       age: new FormControl(null, { validators: [Validators.required] }),
       date: new FormControl(null, { validators: [Validators.required] }),
-      roll: new FormControl(null, { validators: [Validators.required] }),
-      email: new FormControl(null, { validators: [Validators.required] }),
-      gender: new FormControl(null, { validators: [Validators.required] }),
+      rollNo: new FormControl(null, { validators: [Validators.required] }),
+      email: new FormControl(null, { validators: [
+        Validators.required,
+        Validators.pattern("[^ @]*@[^ @]*")
+      ] }),
+      isMale: new FormControl(),
    
   })
 }
@@ -51,10 +55,11 @@ public fillDetails()
       this.form.controls['age'].setValue(data[0].age);
       this.form.controls['email'].setValue(data[0].email);
       this.form.controls['date'].setValue(data[0].date);
-      this.form.controls['gender'].setValue(data[0].isMale);
-      this.form.controls['roll'].setValue(data[0].rollNo);
+      this.form.controls['isMale'].setValue(data[0].isMale);
+      this.form.controls['rollNo'].setValue(data[0].rollNo);
       
-    
+      if(data[0].isMale==true) this.male="true";
+      else this.male="false";
   
     })
 
@@ -69,8 +74,8 @@ public fillDetails()
       console.log(this.form.value)
       this.data.updateStudent(student).subscribe(
         data=>{
-          console.log(data)
-          this.router.navigate(["/display"])
+          this.router.navigate(['/display'])
+          
       },
       err=>
       {

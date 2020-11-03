@@ -5,7 +5,7 @@ export interface Student {
     date: string,
     id: string,
     rollNo: number,
-    isMale: string
+    isMale: boolean
 
 }
 

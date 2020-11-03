@@ -14,12 +14,13 @@
                     <input type="string" email class="form-control" formControlName="email"
                         placeholder="name@example.com">
                 </div>
-                <div *ngIf="form.get('email').invalid && (form.get('email').dirty || form.get('email').touched)" 
-                class="alert alert-danger error">
-              
-                        Email is invalid.
-              
-                </div>
+                <div>
+                <span *ngIf = "form.get('email').invalid && (form.get('email').dirty || form.get('email').touched)" [class] = "'required'">
+                    <span *ngIf="form.get('email').errors.required">Email is required</span>
+                    <span *ngIf="form.get('email').errors.pattern">The email address must contain at least the @ character</span>
+                </span>
+            </div>
+
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Name</label>
                     <input type="text" class="form-control" formControlName="name"
@@ -48,11 +49,11 @@
                     <div class="half">
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Roll No</label>
-                            <input type="number" class="form-control" formControlName="roll"
+                            <input type="number" class="form-control" formControlName="rollNo"
                                 placeholder="Enter your roll no">
                   
                         </div>
-                        <div *ngIf="form.get('roll').invalid && (form.get('roll').dirty || form.get('roll').touched)" 
+                        <div *ngIf="form.get('rollNo').invalid && (form.get('rollNo').dirty || form.get('rollNo').touched)" 
                         class="alert alert-danger error">
                                 Roll is invalid.
                         </div>
@@ -70,11 +71,17 @@
                
                     </div>
                     <div class="form-group " >
-                        <label for="exampleFormControlInput1">Are you male?</label>
-                        <input type="text" class="form-control" formControlName="gender"
-                            placeholder="Answer in true or false!">
+                        <p>Are you male?</p>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="isMale" type="radio" value="true" formControlName="isMale">
+                            <label class="form-check-label" for="inlineRadio1">Yes</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="isMale" type="radio"  value="false" formControlName="isMale">
+                            <label class="form-check-label" for="inlineRadio2">No</label>
+                          </div>
                     </div>
-                    <div *ngIf="form.get('gender').invalid && (form.get('gender').dirty || form.get('gender').touched)"
+                    <div *ngIf="form.get('isMale').invalid && (form.get('isMale').dirty || form.get('isMale').touched)"
                      class="alert alert-danger error">
               
                             Gender is invalid.
@@ -84,7 +91,7 @@
        
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" type="submit" class="btn btn-primary" >Save</button>
+          <button type="button" type="submit" class="btn btn-primary" [disabled]="form.valid" >Save</button>
         </div>
     </form> 
 </div>

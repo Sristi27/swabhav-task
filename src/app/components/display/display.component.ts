@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
-import { Router, RouterEvent } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { Student } from 'src/app/models/student.model';
 
 @Component({
@@ -10,13 +10,23 @@ import { Student } from 'src/app/models/student.model';
 })
 export class DisplayComponent implements OnInit {
 
-  constructor(public data:DataService,private router:Router) { }
+  navigationSubscription;
+  constructor(public data:DataService,private router:Router,private route:ActivatedRoute) { 
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.getStudents();
+      }
+    });
+  }
 
   students=[];
   student_id=""
 
   ngOnInit(){
-    this.getStudents();
+    // this.getStudents();
+    // if(this.route.snapshot.paramMap.get('previousUrl')=="update")
+    // window.location.reload()
   }
 
   public getStudents()
@@ -24,6 +34,7 @@ export class DisplayComponent implements OnInit {
     this.data.getallStudents().subscribe
     (data=>
       {
+        console.log(typeof(data[0]['isMale']))
         this.students=data;
         console.log(this.students);
       },
@@ -48,6 +59,15 @@ export class DisplayComponent implements OnInit {
   {
     console.log(id)
     this.router.navigate(["/update",id])
+  }
+
+  ngOnDestroy() {
+    // avoid memory leaks here by cleaning up after ourselves. If we  
+    // don't then we will continue to run our initialiseInvites()   
+    // method on every navigationEnd event.
+    if (this.navigationSubscription) {  
+       this.navigationSubscription.unsubscribe();
+    }
   }
   }
   

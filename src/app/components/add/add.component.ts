@@ -20,9 +20,12 @@ this.form = new FormGroup({
     name: new FormControl(null, { validators: [Validators.required] }),
     age: new FormControl(null, { validators: [Validators.required] }),
     date: new FormControl(null, { validators: [Validators.required] }),
-    roll: new FormControl(null, { validators: [Validators.required] }),
-    email: new FormControl(null, { validators: [Validators.required] }),
-    gender: new FormControl(null, { validators: [Validators.required] }),
+    rollNo: new FormControl(null, { validators: [Validators.required]}),
+    email: new FormControl(null, { validators:[
+      Validators.required,
+      Validators.pattern("[^ @]*@[^ @]*")
+    ] }),
+    isMale: new FormControl(),
   
 });
  }
