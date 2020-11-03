@@ -74,7 +74,7 @@
                         <input type="text" class="form-control" formControlName="gender"
                             placeholder="Answer in true or false!">
                     </div>
-                    <div *ngIf="form.get('gender').invalid && (form.get('gender').dirty || form.get('gender').touched)"
+                    <div *ngIf="form.get('gender').invalid && (form.get('gender').dirty || form.get('gender').touched )"
                      class="alert alert-danger error">
               
                             Gender is invalid.
@@ -90,5 +90,6 @@
     </form> 
 </div>
       </div>
+
     </div>
   </div>
