@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Student } from 'src/app/models/student.model';
 import { DataService } from 'src/app/services/data.service';
@@ -11,15 +11,23 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class UpdateComponent implements OnInit {
 
-  constructor(private activatedRoute: ActivatedRoute, private data: DataService,private router:Router) { }
+  form:FormGroup;
+  student_id=""
 
-  student_name: string = ""
-  student_email: string = ""
-  student_age: number = 0
-  student_date: string =""
-  student_id: string 
-  student_gender: string =""
-  student_roll: number = 0
+  constructor(private activatedRoute: ActivatedRoute, private data: DataService,private router:Router) {
+
+    
+    this.form = new FormGroup({
+      name: new FormControl(null, { validators: [Validators.required] }),
+      age: new FormControl(null, { validators: [Validators.required] }),
+      date: new FormControl(null, { validators: [Validators.required] }),
+      roll: new FormControl(null, { validators: [Validators.required] }),
+      email: new FormControl(null, { validators: [Validators.required] }),
+      gender: new FormControl(null, { validators: [Validators.required] }),
+   
+  })
+}
+
 
   ngOnInit(): void {
 
@@ -37,36 +45,45 @@ public fillDetails()
   if(this.student_id!=null)
   {
     this.data.getStudentById(this.student_id).subscribe(data => {
-      this.student_name = data[0].name;
-      this.student_age = data[0].age;
-      this.student_email = data[0].email;
-      this.student_roll = data[0].rollNo;
-      this.student_gender = data[0].isMale;
-      this.student_date = data[0].date;
+      
+      this.form.controls['name'].setValue(data[0].name);
+      this.form.controls['age'].setValue(data[0].age);
+      this.form.controls['email'].setValue(data[0].email);
+      this.form.controls['date'].setValue(data[0].date);
+      this.form.controls['gender'].setValue(data[0].isMale);
+      this.form.controls['roll'].setValue(data[0].rollNo);
+      
+    
   
     })
   }
  
 }
-  public onupdate() {
+  public onUpdate() {
     if(this.student_id!=null)
     {
 
       const student:Student = {
-        name:this.student_name,
-        age:this.student_age,
-        email:this.student_email,
-        id:this.student_id,
-        rollNo:this.student_roll,
-        isMale:this.student_gender,
-        date:this.student_date,
+        name:this.form.value.name,
+        age:this.form.value.age,
+        email:this.form.value.email,
+        id:this.form.value.id,
+        rollNo:this.form.value.roll,
+        isMale:this.form.value.gender,
+        date:this.form.value.date,
       }
-      this.data.updateStudent(student).subscribe(data=>{
-         this.router.navigate(["/"])
+      this.data.updateStudent(student).subscribe(
+        data=>{
+         this.router.navigate(["/display"])
+      },
+      err=>
+      {
+        console.log(err)
       })
     }
     
 
   }
+
 }
 

@@ -20,7 +20,11 @@ export class DeleteComponent implements OnInit {
         this.id=this.activatedRoute.snapshot.paramMap.get("id");
         console.log(this.id)
         this.data.deleteStudent(this.id).subscribe(
-          data=>this.router.navigate(["/"])
+          data=>this.router.navigate(["/display"]),
+          err=>
+          {
+            console.log(err)
+          }
         )
       }
     )

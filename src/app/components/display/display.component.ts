@@ -25,6 +25,10 @@ export class DisplayComponent implements OnInit {
       {
         this.students=data;
         console.log(this.students);
+      },
+      err=>
+      {
+        console.log(err)
       }
     )
   }

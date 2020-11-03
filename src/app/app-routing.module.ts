@@ -17,6 +17,7 @@ const routes: Routes = [
   component:DisplayComponent
 },
 {path:"",
+pathMatch:"full",
   component:HomeComponent
 },
 {

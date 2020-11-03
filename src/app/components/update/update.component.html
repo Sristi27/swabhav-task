@@ -8,58 +8,62 @@
           </button>
         </div>
         <div class="modal-body">
-            <form class="formStyle" #f="ngForm" (ngSubmit)="onupdate()">
+            <form class="formStyle" [formGroup]="form" name="form" (ngSubmit)="onUpdate()">
                 <div class="form-group full">
                     <label for="exampleFormControlInput1">Email address</label>
-                    <input type="string" [(ngModel)]="student_email" email #email="ngModel" class="form-control" name="email"
-                    placeholder="name@example.com">
+                    <input type="string" email class="form-control" formControlName="email"
+                        placeholder="name@example.com">
                 </div>
-                <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger error">
+                <!-- <div *ngIf="form.get('email').invalid && (form.get('email').dirty || form.get('email').touched)" 
+                class="alert alert-danger error">
               
                         Email is invalid.
               
-                </div>
+                </div> -->
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Name</label>
-                    <input type="text" class="form-control" name="name" required [(ngModel)]="student_name" #name="ngModel"
+                    <input type="text" class="form-control" formControlName="name"
                         placeholder="Enter your name">
               
                 </div>
-                <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger error">
+                <div *ngIf="form.get('name').invalid && (form.get('name').dirty || form.get('name').touched)" 
+                class="alert alert-danger error">
               
                     <div *ngIf="name.errors.required ">
                         Name is required.
-                    </div>
+                    </div> 
               
                 </div>
                     <div class="form-group" >
                         <label for="exampleFormControlInput1">Date</label>
-                        <input type="string" class="form-control" name="date" [(ngModel)]="student_date" #date="ngModel"
+                        <input type="string" class="form-control" formControlName="date"
                             placeholder="yy-mm-dd">
               
                     </div>
-                    <div *ngIf="date.invalid && (date.dirty || date.touched)" class="alert alert-danger error">
+                    <div *ngIf="form.get('date').invalid && (form.get('date').dirty || form.get('date').touched)" 
+                    class="alert alert-danger error">
                             Date is invalid.
                
                     </div>
                     <div class="half">
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Roll No</label>
-                            <input type="number" class="form-control" name="roll" [(ngModel)]="student_roll" #roll="ngModel"
+                            <input type="number" class="form-control" formControlName="roll"
                                 placeholder="Enter your roll no">
                   
                         </div>
-                        <div *ngIf="roll.invalid && (roll.dirty || roll.touched)" class="alert alert-danger error">
+                        <div *ngIf="form.get('roll').invalid && (form.get('roll').dirty || form.get('roll').touched)" 
+                        class="alert alert-danger error">
                                 Roll is invalid.
                         </div>
                   
                         <div class="form-group ">
                             <label for="exampleFormControlInput1">Age</label>
-                            <input type="number" class="form-control" name="age" [(ngModel)]="student_age" #age="ngModel"
+                            <input type="number" class="form-control" formControlName="age"
                                 placeholder="Enter your age">
                         </div>
                     </div>
-                    <div *ngIf="age.invalid && (age.dirty || age.touched)" class="alert alert-danger error">
+                    <div *ngIf="form.get('age').invalid && (form.get('age').dirty || form.get('age').touched)" class="alert alert-danger error">
               
                             Age is invalid.
                        
@@ -67,29 +71,20 @@
                     </div>
                     <div class="form-group " >
                         <label for="exampleFormControlInput1">Are you male?</label>
-                        <input type="text" class="form-control" name="gender" [(ngModel)]="student_gender" #gender="ngModel"
+                        <input type="text" class="form-control" formControlName="gender"
                             placeholder="Answer in true or false!">
                     </div>
-                    <div *ngIf="gender.invalid && (gender.dirty || gender.touched)" class="alert alert-danger error">
+                    <div *ngIf="form.get('gender').invalid && (form.get('gender').dirty || form.get('gender').touched)"
+                     class="alert alert-danger error">
               
                             Gender is invalid.
                
                     </div>
-                <!-- <div class="form-group full">
-                    <label for="exampleFormControlInput1">ID</label>
-                    <input type="string" class="form-control" name="id" required [(ngModel)]="student_id" #id="ngModel"
-                        placeholder="Enter your ID">
-                </div>
-                <div *ngIf="id.invalid && (id.dirty || id.touched)" class="alert alert-danger error">
-              
-                    <div *ngIf="id.errors.required">
-                        ID is required.
-                    </div>
-              ()
-                </div> -->
+               
        
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+          <button type="button" class="btn btn-secondary" 
+          data-dismiss="modal">Close</button>
           <button type="button" type="submit" class="btn btn-primary">Save</button>
         </div>
     </form> 

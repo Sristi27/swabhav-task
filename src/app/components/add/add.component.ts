@@ -1,6 +1,6 @@
 import { Route } from '@angular/compiler/src/core';
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Student } from 'src/app/models/student.model';
 import { DataService } from 'src/app/services/data.service';
@@ -12,55 +12,49 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class AddComponent implements OnInit {
  
- constructor(public data:DataService,public router:Router) { }
+  form:FormGroup  
+ constructor(public data:DataService,public router:Router) { 
  
- student_name:string
- student_email:string
- student_age:number
- student_date:string
- student_gender:string
- student_roll:number
+this.form = new FormGroup({
+    id: new FormControl(null),
+    name: new FormControl(null, { validators: [Validators.required] }),
+    age: new FormControl(null, { validators: [Validators.required] }),
+    date: new FormControl(null, { validators: [Validators.required] }),
+    roll: new FormControl(null, { validators: [Validators.required] }),
+    email: new FormControl(null, { validators: [Validators.required] }),
+    gender: new FormControl(null, { validators: [Validators.required] }),
+  
+});
+ }
+ 
  
  students:Student[]=[];
- ngOnInit(): void {
 
-  // this.data.getallStudents().subscribe(
-  //   data=>
-  //   {
-  //     for (let i=0;i<Object.keys(data).length;i++)
-  //     {
-  //       this.students.push(data[i])
-  //     }
-  //   })
-  
-   // console.log(this.router.getCurrentNavigation().extras.state.student);
  
-  // if(this.router.url==="/edit")
-  // {
-  //  console.log( window.history.state.student[0]);
-  //  this.student_name=window.history.state.student[0].name
-  //  this.student_email=window.history.state.student[0].email
-  //  this.student_age=window.history.state.student[0].age
-  //  this.student_date=window.history.state.student[0].date
-  //  this.student_id=window.history.state.student[0].id
-  //  this.student_gender=window.history.state.student[0].isMale
-  //  this.student_roll=window.history.state.student[0].rollNo
-  // }
- }
-onsubmit(f:NgForm)
+ ngOnInit(): void {}
+
+onSubmit()
  {
-   console.log(f.value)
+   console.log(this.form.value)
    const student:Student = {
-     name:f.value.name,
-     age:f.value.age,
-     email:f.value.email,
+     name:this.form.value.name,
+     age:this.form.value.age,
+     email:this.form.value.email,
      id:null,
-     rollNo:f.value.roll,
-     isMale:f.value.gender,
-     date:f.value.date,
+     rollNo:this.form.value.roll,
+     isMale:this.form.value.gender,
+     date:this.form.value.date,
    }
    console.log(student)
-   this.data.addStudent(student).subscribe(data=>this.router.navigate(["/"]))
+   this.data.addStudent(student).subscribe(data=>
+    {
+      this.router.navigate(["/display"])
+    }
+    ,
+      err=>
+      {
+        console.log(err)
+      })
  
 }
 }

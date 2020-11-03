@@ -10,7 +10,7 @@ import { Observable, Subject } from 'rxjs';
 export class DataService {
 
     students=[];
-    newStudents:Subject<Student[]>;
+    // newStudents:Subject<Student[]>;
 
     baseUrl= "http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students";
 
@@ -28,9 +28,11 @@ export class DataService {
     
     addStudent(student:Student)
     {
-       return this.http.put<Student>(`${this.baseUrl}`,
-       JSON.stringify(student), 
-       {'headers':new HttpHeaders({'Content-Type' : 'application/json'})});
+        let studentJson=JSON.stringify(student)
+        let httpHeader=new HttpHeaders({'Content-Type' : 'application/json'})
+       return this.http.post<Student>(`${this.baseUrl}`,
+       studentJson, 
+       {'headers':httpHeader});
     }
   
     getStudentById(id:string):Observable<Student>
@@ -40,9 +42,11 @@ export class DataService {
 
     updateStudent(student:Student)
     {
+        let studentJson=JSON.stringify(student)
+        let httpHeader=new HttpHeaders({'Content-Type' : 'application/json'})
        return this.http.put<Student>(`${this.baseUrl}/${student.id}`,
-       JSON.stringify(student), 
-       {'headers':new HttpHeaders({'Content-Type' : 'application/json'})});
+       studentJson, 
+       {'headers':httpHeader});
     }
 }
 
