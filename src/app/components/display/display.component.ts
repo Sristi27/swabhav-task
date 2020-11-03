@@ -13,6 +13,7 @@ export class DisplayComponent implements OnInit {
   constructor(public data:DataService,private router:Router) { }
 
   students=[];
+  student_id=""
 
   ngOnInit(){
     this.getStudents();
@@ -33,10 +34,15 @@ export class DisplayComponent implements OnInit {
     )
   }
 
-  public onDelete(id:string)
+  assignID(id:string)
   {
-    console.log(id)
-    this.router.navigate(["/delete",id])
+    this.student_id=id;
+  }
+
+  public onDelete()
+  {
+    console.log(this.student_id)
+    this.router.navigate(["/delete",this.student_id])
   }
   public onUpdate(id:string)
   {

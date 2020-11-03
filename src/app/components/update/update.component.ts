@@ -18,6 +18,7 @@ export class UpdateComponent implements OnInit {
 
     
     this.form = new FormGroup({
+      id: new FormControl(null),
       name: new FormControl(null, { validators: [Validators.required] }),
       age: new FormControl(null, { validators: [Validators.required] }),
       date: new FormControl(null, { validators: [Validators.required] }),
@@ -56,29 +57,24 @@ public fillDetails()
     
   
     })
+
+    this.form.controls['id'].setValue(this.student_id);
   }
  
 }
   public onUpdate() {
     if(this.student_id!=null)
     {
-
-      const student:Student = {
-        name:this.form.value.name,
-        age:this.form.value.age,
-        email:this.form.value.email,
-        id:this.form.value.id,
-        rollNo:this.form.value.roll,
-        isMale:this.form.value.gender,
-        date:this.form.value.date,
-      }
+      const student=this.form.value;
+      console.log(this.form.value)
       this.data.updateStudent(student).subscribe(
         data=>{
-         this.router.navigate(["/display"])
+          console.log(data)
+          this.router.navigate(["/display"])
       },
       err=>
       {
-        console.log(err)
+        alert(err)
       })
     }
     

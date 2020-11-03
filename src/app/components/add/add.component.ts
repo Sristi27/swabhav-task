@@ -36,15 +36,7 @@ this.form = new FormGroup({
 onSubmit()
  {
    console.log(this.form.value)
-   const student:Student = {
-     name:this.form.value.name,
-     age:this.form.value.age,
-     email:this.form.value.email,
-     id:null,
-     rollNo:this.form.value.roll,
-     isMale:this.form.value.gender,
-     date:this.form.value.date,
-   }
+   const student:Student = this.form.value;
    console.log(student)
    this.data.addStudent(student).subscribe(data=>
     {
