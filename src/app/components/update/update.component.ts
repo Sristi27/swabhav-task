@@ -40,7 +40,7 @@ export class UpdateComponent implements OnInit {
         ]}),
       email: new FormControl(null, { validators:[
         Validators.required,
-        Validators.pattern("[^ @]*@[^ @]*")
+        Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
       ] }),
       isMale: new FormControl({validators:[Validators.required]}),
     

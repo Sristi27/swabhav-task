@@ -15,7 +15,7 @@ export class AddComponent implements OnInit {
   form:FormGroup  
  constructor(public data:DataService,public router:Router) { 
  
-this.form = new FormGroup({
+  this.form = new FormGroup({
     id: new FormControl(null),
     name: new FormControl(null, { validators: 
       [Validators.required,
@@ -33,11 +33,11 @@ this.form = new FormGroup({
     }),
     rollNo: new FormControl(null, { validators: 
       [Validators.required,
-        Validators.pattern(/ ^[1-9]+[0-9]*$/)
+        Validators.pattern(/^[1-9]+[0-9]*$/)
       ]}),
     email: new FormControl(null, { validators:[
       Validators.required,
-      Validators.pattern("[^ @]*@[^ @]*")
+      Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
     ] }),
     isMale: new FormControl({validators:[Validators.required]}),
   
