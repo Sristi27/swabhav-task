@@ -18,7 +18,7 @@
         <th scope="col">Age</th>
         <th scope="col">ID</th>
         <th scope="col">Roll</th>
-        <th scope="col">isMale</th>
+        <th scope="col">Gender</th>
         <th scope="col">Date</th>
         <th scope="col">Action1</th>
         <th scope="col">Action2</th>
@@ -32,7 +32,8 @@
         <td>{{student.age}}</td>
         <td>{{student.id}}</td>
         <td>{{student.rollNo}}</td>
-        <td>{{student.isMale}}</td>
+        <td *ngIf="student.isMale==true">Male</td>
+        <td *ngIf="student.isMale==false">Female</td>
         <td>{{student.date}}</td>
         <td>
           <button type="button" class="btn btn-danger" data-toggle="modal" (click)="deleteId(student.id)"
