@@ -33,3 +33,16 @@ margin:50px auto;
    font-size: large;
    margin-top: 60px;
 }
+
+.styler
+{
+    widows: 90%
+}
+.half
+{
+    display: flex;
+}
+.half div:first-child
+{
+    margin-right: 20px;
+}

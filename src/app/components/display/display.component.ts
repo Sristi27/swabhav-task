@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { Student } from 'src/app/models/student.model';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { resetFakeAsyncZone } from '@angular/core/testing';
 
 @Component({
   selector: 'app-display',
@@ -10,33 +12,84 @@ import { Student } from 'src/app/models/student.model';
 })
 export class DisplayComponent implements OnInit {
 
-  navigationSubscription;
-  constructor(public data:DataService,private router:Router,private route:ActivatedRoute) { 
-    this.navigationSubscription = this.router.events.subscribe((e: any) => {
-      // If it is a NavigationEnd event re-initalise the component
-      if (e instanceof NavigationEnd) {
-        this.getStudents();
-      }
+  form: FormGroup;
+
+  constructor(public data: DataService, private router: Router, private route: ActivatedRoute) {
+
+    this.form = new FormGroup({
+      id: new FormControl(null),
+      name: new FormControl(null, {
+        validators:
+          [Validators.required,
+          Validators.pattern(/^[a-zA-Z]+([a-zA-Z\s*]?)+$/)
+          ]
+      }),
+      age: new FormControl(null, {
+        validators:
+          [
+            Validators.required,
+            Validators.pattern(/^[1-9]+[0-9]*$/)
+          ]
+      }),
+      date: new FormControl(null, {
+        validators:
+          [Validators.required,
+          Validators.pattern(/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/)
+          ]
+      }),
+      rollNo: new FormControl(null, {
+        validators:
+          [Validators.required,
+          Validators.pattern(/^[1-9]+[0-9]*$/)
+          ]
+      }),
+      email: new FormControl(null, {
+        validators: [
+          Validators.required,
+          Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
+        ]
+      }),
+      isMale: new FormControl({ validators: [Validators.required] }),
+
     });
   }
 
-  students=[];
-  student_id=""
+  students = [];
+  delete_ID="";
+  upadte_ID="";
+  male="";
 
-  ngOnInit(){
-    // this.getStudents();
-    // if(this.route.snapshot.paramMap.get('previousUrl')=="update")
-    // window.location.reload()
+  ngOnInit() { this.getStudents(); }
+
+  public getStudents() {
+    this.data.getallStudents().subscribe
+      (data => {
+        console.log(typeof (data[0]['isMale']))
+        this.students = data;
+        console.log(this.students);
+      },
+        err => {
+          console.log(err)
+        }
+      )
   }
 
-  public getStudents()
+  deleteId(id: string) {
+    this.delete_ID=id;
+  }
+
+  updateId(id:string)
   {
-    this.data.getallStudents().subscribe
-    (data=>
+    this.upadte_ID=id;
+    this.fillDetails();
+  }
+
+  public onDelete() {
+    console.log(this.delete_ID);
+    this.data.deleteStudent(this.delete_ID).subscribe(
+      data=>
       {
-        console.log(typeof(data[0]['isMale']))
-        this.students=data;
-        console.log(this.students);
+        this.getStudents();
       },
       err=>
       {
@@ -45,32 +98,75 @@ export class DisplayComponent implements OnInit {
     )
   }
 
-  assignID(id:string)
+  
+  public fillDetails()
   {
-    this.student_id=id;
-  }
 
-  public onDelete()
-  {
-    console.log(this.student_id)
-    this.router.navigate(["/delete",this.student_id])
-  }
-  public onUpdate(id:string)
-  {
-    console.log(id)
-    this.router.navigate(["/update",id])
-  }
-
-  ngOnDestroy() {
-    // avoid memory leaks here by cleaning up after ourselves. If we  
-    // don't then we will continue to run our initialiseInvites()   
-    // method on every navigationEnd event.
-    if (this.navigationSubscription) {  
-       this.navigationSubscription.unsubscribe();
+    if(this.upadte_ID!="")
+    {
+      this.data.getStudentById(this.upadte_ID).subscribe(data => {
+      
+        this.form.setValue(
+          {
+            name:data[0].name,
+            age:data[0].age,
+            email:data[0].email,
+            isMale:data[0].isMale,
+            rollNo:data[0].rollNo,
+            date:data[0].date,
+            id:this.upadte_ID
+  
+          }
+        )
+        if(data[0].isMale==true) this.male="true";
+        else this.male="false";
+    
+      })
     }
+    
   }
+
+  public onUpdate() {
+
+    // this.fillDetails(this.student_id);
+    const student = this.form.value;
+    console.log(this.form.value)
+    this.data.updateStudent(student).subscribe(
+      data => {
+        this.form.reset();
+        this.getStudents();
+
+      },
+      err => {
+        alert(err)
+      })
   }
+
+  public onAdd()
+  
+ {
+   console.log(this.form.value)
+   const student:Student = this.form.value;
+   console.log(student)
+   this.data.addStudent(student).subscribe(data=>
+    {
+      this.getStudents();
+    }
+    ,
+      err=>
+      {
+        console.log(err)
+      })
+ 
+}
   
 
 
- 
+
+
+
+}
+
+
+
+

@@ -1,14 +1,16 @@
+<div style="margin-left: 40px;">
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".add">
+    Add new Student</button>
+</div>
+
+
 <div class="para" *ngIf="students.length==0">
-    <p>
-        No student data available
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
-            Create new Student
-          </button>
-          <app-add></app-add>
-    </p>
+  <p>
+    No student data available
+  </p>
 </div>
 <div class="table-responsive styleTable" *ngIf="students.length>0">
-    <table class="table table-bordered table-dark ">
+  <table class="table table-bordered table-dark ">
     <thead>
       <tr>
         <th scope="col">Name</th>
@@ -24,7 +26,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let student of students">
-       
+
         <td>{{student.name}}</td>
         <td>{{student.email}}</td>
         <td>{{student.age}}</td>
@@ -33,22 +35,22 @@
         <td>{{student.isMale}}</td>
         <td>{{student.date}}</td>
         <td>
-          <button type="button" class="btn btn-danger" data-toggle="modal" (click)="assignID(student.id)"
+          <button type="button" class="btn btn-danger" data-toggle="modal" (click)="deleteId(student.id)"
             data-target="#deleteConfirmation">Delete</button>
         </td>
         <td>
-            <button class="btn btn-primary" (click)="onUpdate(student.id)"
-             data-toggle="modal" data-target=".update">
-                Update
-              </button>
-              <app-update></app-update>
-          </td>
+          <button class="btn btn-primary" (click)="updateId(student.id)" data-toggle="modal" data-target=".update">
+            Update
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
-  
- </div>
 
+</div>
+
+
+<!-- Delete -->
 
 <div class="modal" id="deleteConfirmation">
   <div class="modal-dialog modal-lg">
@@ -78,3 +80,260 @@
 </div>
 
 
+<!-- Update -->
+
+<div class="modal fade bd-example-modal-lg update" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Student</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="formStyle" [formGroup]="form" name="form" (ngSubmit)="onUpdate()">
+          <div class="form-group full">
+            <label for="exampleFormControlInput1">Email address</label>
+            <input type="string" email class="form-control" formControlName="email" placeholder="name@example.com">
+          </div>
+          <div *ngIf="form.get('email').invalid && (form.get('email').dirty || form.get('email').touched)"
+            class="alert alert-danger error">
+
+            <div *ngIf="form.get('email').errors.required">
+              Email must be specified!
+            </div>
+            <div *ngIf="form.get('email').errors.pattern">
+              Email is invalid!
+            </div>
+
+          </div>
+
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Name</label>
+            <input type="text" class="form-control" formControlName="name" placeholder="Enter your name">
+
+          </div>
+          <div *ngIf="form.get('name').invalid && (form.get('name').dirty || form.get('name').touched)"
+            class="alert alert-danger error">
+
+            <div *ngIf="form.get('name').errors.required">
+              Name must be specified!
+            </div>
+            <div *ngIf="form.get('name').errors.pattern">
+              Name should contain only alphabets!
+            </div>
+
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Date</label>
+            <input type="date" class="form-control" formControlName="date" placeholder="yyyy-mm-dd">
+
+          </div>
+          <div *ngIf="form.get('date').invalid && (form.get('date').dirty || form.get('date').touched)"
+            class="alert alert-danger error">
+
+            <div *ngIf="form.get('date').errors.required">
+              Date must be specified!
+            </div>
+            <div *ngIf="form.get('date').errors.pattern">
+              Date format is not correct!
+            </div>
+
+          </div>
+          <div class="half">
+            <div style="display:flex;flex-direction: column;">
+              <div class="form-group">
+                <label for="exampleFormControlInput1">Roll No</label>
+                <input type="number" class="form-control" formControlName="rollNo" placeholder="Enter your roll no">
+
+              </div>
+              <div *ngIf="form.get('rollNo').invalid && (form.get('rollNo').dirty || form.get('rollNo').touched)"
+                class="alert alert-danger error">
+
+                <div *ngIf="form.get('rollNo').errors.required">Roll must be specified!</div>
+                <div *ngIf="form.get('rollNo').errors.pattern">Roll must be greater than 0</div>
+
+
+              </div>
+            </div>
+
+            <div style="display:flex;flex-direction: column;">
+              <div class="form-group ">
+                <label for="exampleFormControlInput1">Age</label>
+                <input type="number" class="form-control" formControlName="age" placeholder="Enter your age">
+              </div>
+              <div *ngIf="form.get('age').invalid && (form.get('age').dirty || form.get('age').touched)"
+                class="alert alert-danger error">
+
+                <div *ngIf="form.get('age').errors.required">Age must be specified!</div>
+                <div *ngIf="form.get('age').errors.pattern">Age must be greater than 0</div>
+
+
+              </div>
+            </div>
+          </div>
+
+
+          <div class="form-group ">
+            <p>Gender</p>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" name="isMale" type="radio" value="true" [checked]="male"
+                formControlName="isMale">
+              <label class="form-check-label" for="inlineRadio1">Male</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" name="isMale" type="radio" value="false" [checked]="!male"
+                formControlName="isMale">
+              <label class="form-check-label" for="inlineRadio2">Female</label>
+            </div>
+          </div>
+          <div *ngIf="form.get('isMale').invalid && (form.get('isMale').dirty || form.get('isMale').touched)"
+            class="alert alert-danger error">
+
+            Gender is invalid.
+
+          </div>
+
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" type="submit" class="btn btn-primary"
+              [disabled]="form.invalid || !form.dirty || !form.touched">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- Add -->
+
+<div class="modal fade bd-example-modal-lg add" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" 
+aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add New Student</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form class="formStyle" [formGroup]="form" name="form" (ngSubmit)="onAdd()">
+              <div class="form-group full">
+                  <label for="exampleFormControlInput1">Email address</label>
+                  <input type="string" email class="form-control" formControlName="email"
+                      placeholder="name@example.com">
+              </div>
+                  <div *ngIf="form.get('email').invalid && (form.get('email').dirty || form.get('email').touched)" 
+                  class="alert alert-danger error">
+                
+                  <div *ngIf="form.get('email').errors.required">
+                      Email must be specified!
+                    </div>
+                    <div *ngIf="form.get('email').errors.pattern">
+                      Email is invalid!
+                    </div>
+                
+                  </div>
+
+              <div class="form-group">
+                  <label for="exampleFormControlInput1">Name</label>
+                  <input type="text" class="form-control" formControlName="name"
+                      placeholder="Enter your name">
+            
+              </div>
+              <div *ngIf="form.get('name').invalid && (form.get('name').dirty || form.get('name').touched)" 
+              class="alert alert-danger error">
+            
+              <div *ngIf="form.get('name').errors.required">
+                  Name must be specified!
+                </div>
+                <div *ngIf="form.get('name').errors.pattern">
+                  Name should contain only alphabets!
+                </div>
+            
+              </div>
+                  <div class="form-group" >
+                      <label for="exampleFormControlInput1">Date</label>
+                      <input type="date" class="form-control" formControlName="date"
+                          placeholder="yyyy-mm-dd">
+            
+                  </div>
+                  <div *ngIf="form.get('date').invalid && (form.get('date').dirty || form.get('date').touched)" 
+                  class="alert alert-danger error">
+                
+                  <div *ngIf="form.get('date').errors.required">
+                      Date must be specified!
+                    </div>
+                    <div *ngIf="form.get('date').errors.pattern">
+                      Date format is not correct!
+                    </div>
+                
+                  </div>
+                  <div class="half">
+                     <div style="display:flex;flex-direction: column;">
+                      <div class="form-group">
+                          <label for="exampleFormControlInput1">Roll No</label>
+                          <input type="number" class="form-control" formControlName="rollNo"
+                              placeholder="Enter your roll no">
+                
+                      </div>
+                      <div *ngIf="form.get('rollNo').invalid && (form.get('rollNo').dirty || form.get('rollNo').touched)" 
+                      class="alert alert-danger error">
+                      <div *ngIf="form.get('rollNo').errors.required">Roll must be specified!</div>
+                      <div *ngIf="form.get('rollNo').errors.pattern">Roll must be greater than 0</div>
+                      </div></div>
+
+                      <div style="display:flex;flex-direction: column;">
+                          <div class="form-group ">
+                              <label for="exampleFormControlInput1">Age</label>
+                              <input type="number" class="form-control" formControlName="age"
+                                  placeholder="Enter your age">
+                          </div>
+                      <div *ngIf="form.get('age').invalid && (form.get('age').dirty || form.get('age').touched)" 
+                      class="alert alert-danger error">
+                
+                            <div *ngIf="form.get('age').errors.required">Age must be specified!</div>
+                            <div *ngIf="form.get('age').errors.pattern">Age must be greater than 0</div>
+                         
+                 
+                      </div>
+                      </div>
+                  </div>
+                
+                      
+                  <div class="form-group " >
+                      <p>Gender</p>
+                      <div class="form-check form-check-inline">
+                          <input class="form-check-input" name="isMale" type="radio" value="true" formControlName="isMale">
+                          <label class="form-check-label" for="inlineRadio1">Male</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" name="isMale" type="radio"  value="false" formControlName="isMale">
+                          <label class="form-check-label" for="inlineRadio2">Female</label>
+                        </div>
+                  </div>
+                  <div *ngIf="form.get('isMale').invalid && (form.get('isMale').dirty || form.get('isMale').touched)"
+                   class="alert alert-danger error">
+            
+                          Gender is invalid.
+             
+                  </div>
+             
+     
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" type="submit" class="btn btn-primary" 
+         [disabled]="form.invalid || !form.dirty || !form.touched" >
+          Save</button>
+      </div>
+  </form> 
+</div>
+    </div>
+  </div>
+</div>
