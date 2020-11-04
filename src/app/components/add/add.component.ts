@@ -17,15 +17,29 @@ export class AddComponent implements OnInit {
  
 this.form = new FormGroup({
     id: new FormControl(null),
-    name: new FormControl(null, { validators: [Validators.required] }),
-    age: new FormControl(null, { validators: [Validators.required] }),
-    date: new FormControl(null, { validators: [Validators.required] }),
-    rollNo: new FormControl(null, { validators: [Validators.required]}),
+    name: new FormControl(null, { validators: 
+      [Validators.required,
+        Validators.pattern(/^[a-zA-Z]+([a-zA-Z\s*]?)+$/)
+      ] }),
+    age: new FormControl(null, { validators: 
+      [
+        Validators.required,
+        Validators.pattern(/^[1-9]+[0-9]*$/)
+      ] }),
+    date: new FormControl(null, { validators: 
+      [Validators.required,
+        Validators.pattern(/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/)
+    ] 
+    }),
+    rollNo: new FormControl(null, { validators: 
+      [Validators.required,
+        Validators.pattern(/ ^[1-9]+[0-9]*$/)
+      ]}),
     email: new FormControl(null, { validators:[
       Validators.required,
       Validators.pattern("[^ @]*@[^ @]*")
     ] }),
-    isMale: new FormControl(),
+    isMale: new FormControl({validators:[Validators.required]}),
   
 });
  }

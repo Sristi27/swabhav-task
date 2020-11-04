@@ -20,17 +20,31 @@ export class UpdateComponent implements OnInit {
     
     this.form = new FormGroup({
       id: new FormControl(null),
-      name: new FormControl(null, { validators: [Validators.required] }),
-      age: new FormControl(null, { validators: [Validators.required] }),
-      date: new FormControl(null, { validators: [Validators.required] }),
-      rollNo: new FormControl(null, { validators: [Validators.required] }),
-      email: new FormControl(null, { validators: [
+      name: new FormControl(null, { validators: 
+        [Validators.required,
+          Validators.pattern(/^[a-zA-Z]+([a-zA-Z\s*]?)+$/)
+        ] }),
+      age: new FormControl(null, { validators: 
+        [
+          Validators.required,
+          Validators.pattern(/^[1-9]+[0-9]*$/)
+        ] }),
+      date: new FormControl(null, { validators: 
+        [Validators.required,
+          Validators.pattern(/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/)
+      ] 
+      }),
+      rollNo: new FormControl(null, { validators: 
+        [Validators.required,
+          Validators.pattern(/^[1-9]+[0-9]*$/)
+        ]}),
+      email: new FormControl(null, { validators:[
         Validators.required,
         Validators.pattern("[^ @]*@[^ @]*")
       ] }),
-      isMale: new FormControl(),
-   
-  })
+      isMale: new FormControl({validators:[Validators.required]}),
+    
+  });
 }
 
 
@@ -51,19 +65,23 @@ public fillDetails()
   {
     this.data.getStudentById(this.student_id).subscribe(data => {
       
-      this.form.controls['name'].setValue(data[0].name);
-      this.form.controls['age'].setValue(data[0].age);
-      this.form.controls['email'].setValue(data[0].email);
-      this.form.controls['date'].setValue(data[0].date);
-      this.form.controls['isMale'].setValue(data[0].isMale);
-      this.form.controls['rollNo'].setValue(data[0].rollNo);
-      
+      this.form.setValue(
+        {
+          name:data[0].name,
+          age:data[0].age,
+          email:data[0].email,
+          isMale:data[0].isMale,
+          rollNo:data[0].rollNo,
+          date:data[0].date,
+          id:this.student_id
+
+        }
+      )
       if(data[0].isMale==true) this.male="true";
       else this.male="false";
   
     })
 
-    this.form.controls['id'].setValue(this.student_id);
   }
  
 }
