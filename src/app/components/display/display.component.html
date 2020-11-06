@@ -180,12 +180,12 @@
           <div class="form-group ">
             <p>Gender</p>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" name="isMale" type="radio" value="true" [checked]="male=='true'"
+              <input class="form-check-input" name="isMale" type="radio" value="true" [checked]="this.form.get('isMale').value"
                 formControlName="isMale">
               <label class="form-check-label" for="inlineRadio1">Male</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" name="isMale" type="radio" value="false" [checked]="male=='false'"
+              <input class="form-check-input" name="isMale" type="radio" value="false" [checked]="!this.form.get('isMale').value"
                 formControlName="isMale">
               <label class="form-check-label" for="inlineRadio2">Female</label>
             </div>

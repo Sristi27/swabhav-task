@@ -118,9 +118,6 @@ export class DisplayComponent implements OnInit {
   
           }
         )
-        if(data[0].isMale==true) this.male="true";
-        else this.male="false";
-    
       })
     }
     
