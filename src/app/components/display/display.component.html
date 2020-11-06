@@ -180,12 +180,12 @@
           <div class="form-group ">
             <p>Gender</p>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" name="isMale" type="radio" value="true" [checked]="male"
+              <input class="form-check-input" name="isMale" type="radio" value="true" [checked]="male=='true'"
                 formControlName="isMale">
               <label class="form-check-label" for="inlineRadio1">Male</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" name="isMale" type="radio" value="false" [checked]="!male"
+              <input class="form-check-input" name="isMale" type="radio" value="false" [checked]="male=='false'"
                 formControlName="isMale">
               <label class="form-check-label" for="inlineRadio2">Female</label>
             </div>
@@ -200,8 +200,8 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" type="submit" class="btn btn-primary"
-              [disabled]="form.invalid || !form.dirty || !form.touched">Save</button>
+            <button type="submit" class="btn btn-primary"
+              [disabled]="form.invalid || !form.dirty || !form.touched"  data-dismiss="modal">Save</button>
           </div>
         </form>
       </div>
@@ -329,7 +329,7 @@ aria-hidden="true">
      
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" type="submit" class="btn btn-primary" 
+        <button type="submit" class="btn btn-primary"  data-dismiss="modal"
          [disabled]="form.invalid || !form.dirty || !form.touched" >
           Save</button>
       </div>
