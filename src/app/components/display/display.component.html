@@ -94,7 +94,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form class="formStyle" [formGroup]="form" name="form" (ngSubmit)="onUpdate()">
+        <form class="formStyle" [formGroup]="form" name="form">
           <div class="form-group full">
             <label for="exampleFormControlInput1">Email address</label>
             <input type="string" email class="form-control" formControlName="email" placeholder="name@example.com">
@@ -200,8 +200,8 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary"
-              [disabled]="form.invalid || !form.dirty || !form.touched"  data-dismiss="modal">Save</button>
+            <button type="submit" class="btn btn-primary" (click)="onUpdate()"
+              [disabled]="form.invalid||!form.dirty"  data-dismiss="modal">Save</button>
           </div>
         </form>
       </div>
@@ -224,7 +224,7 @@ aria-hidden="true">
         </button>
       </div>
       <div class="modal-body">
-          <form class="formStyle" [formGroup]="form" name="form" (ngSubmit)="onAdd()">
+          <form class="formStyle" [formGroup]="form" name="form">
               <div class="form-group full">
                   <label for="exampleFormControlInput1">Email address</label>
                   <input type="string" email class="form-control" formControlName="email"
@@ -329,7 +329,7 @@ aria-hidden="true">
      
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary"  data-dismiss="modal"
+        <button type="submit" class="btn btn-primary"  data-dismiss="modal" (click)="onAdd()"
          [disabled]="form.invalid || !form.dirty || !form.touched" >
           Save</button>
       </div>
