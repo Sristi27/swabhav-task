@@ -88,6 +88,10 @@ export class DisplayComponent implements OnInit {
     this.delete_ID=id;
   }
 
+  onclickAdd()
+  {
+    this.createForm();
+  }
   updateId(id:string)
   {
     this.upadte_ID=id;
@@ -155,7 +159,6 @@ export class DisplayComponent implements OnInit {
   public onAddStudent()
   
  {
-   this.createForm();
    console.log(this.form.value)
 
    const student:Student = this.form.value;
