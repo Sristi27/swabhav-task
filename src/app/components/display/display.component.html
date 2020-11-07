@@ -201,7 +201,7 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary" (click)="onUpdate()"
-              [disabled]="form.invalid||!form.dirty"  data-dismiss="modal">Save</button>
+              [disabled]="form.invalid||form.dirty"  data-dismiss="modal">Save</button>
           </div>
         </form>
       </div>
@@ -330,7 +330,7 @@ aria-hidden="true">
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary"  data-dismiss="modal" (click)="onAdd()"
-         [disabled]="form.invalid || !form.dirty || !form.touched" >
+         [disabled]="form.invalid || form.dirty || !form.touched" >
           Save</button>
       </div>
   </form> 
