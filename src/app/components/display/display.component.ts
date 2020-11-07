@@ -15,7 +15,12 @@ export class DisplayComponent implements OnInit {
   form: FormGroup;
 
   constructor(public data: DataService, private router: Router, private route: ActivatedRoute) {
+    this.createForm();
+  }
 
+
+  createForm()
+  {
     this.form = new FormGroup({
       id: new FormControl(null),
       name: new FormControl(null, {
@@ -57,7 +62,6 @@ export class DisplayComponent implements OnInit {
   students = [];
   delete_ID="";
   upadte_ID="";
-  male="";
 
   ngOnInit() { this.getStudents(); }
 
@@ -87,6 +91,7 @@ export class DisplayComponent implements OnInit {
   updateId(id:string)
   {
     this.upadte_ID=id;
+    this.createForm();
     this.fillDetails();
   }
 
@@ -113,18 +118,12 @@ export class DisplayComponent implements OnInit {
     if(this.upadte_ID!="")
     {
       this.data.getStudentById(this.upadte_ID).subscribe(data => {
-      
-        if(data[0].isMale==true)
-        this.male="male"
-        else
-        this.male="female"
-
         this.form.setValue(
           {
             name:data[0].name,
             age:data[0].age,
             email:data[0].email,
-            isMale:this.male,
+            isMale:data[0].isMale,
             rollNo:data[0].rollNo,
             date:data[0].date,
             id:this.upadte_ID
@@ -156,23 +155,8 @@ export class DisplayComponent implements OnInit {
   public onAddStudent()
   
  {
+   this.createForm();
    console.log(this.form.value)
-   if(this.form.get('isMale').value=="male")
-   {
-      this.form.patchValue(
-        {
-          'isMale':true
-        }
-      )
-   }
-   else if(this.form.get('isMale').value=="female"){
-     this.form.patchValue(
-       {
-         'isMale':false
-       }
-     )
-     }
-   
 
    const student:Student = this.form.value;
    console.log(student)

@@ -1,4 +1,4 @@
-<div style="margin-left: 30px;">
+<div style="margin-left: 34px;margin-top: 30px;">
   <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".add">
     Add new Student</button>
 </div>
@@ -180,12 +180,12 @@
           <div class="form-group ">
             <p>Gender</p>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" name="isMale" type="radio" value="male" 
+              <input class="form-check-input" name="isMale" type="radio" [value]=true
                 formControlName="isMale">
               <label class="form-check-label" for="inlineRadio1">Male</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" name="isMale" type="radio" value="female" 
+              <input class="form-check-input" name="isMale" type="radio" [value]=false
                 formControlName="isMale">
               <label class="form-check-label" for="inlineRadio2">Female</label>
             </div>
@@ -311,11 +311,11 @@ aria-hidden="true">
                   <div class="form-group " >
                       <p>Gender</p>
                       <div class="form-check form-check-inline">
-                          <input class="form-check-input" name="isMale" type="radio" value="male" formControlName="isMale">
+                          <input class="form-check-input" name="isMale" type="radio" [value]=true formControlName="isMale">
                           <label class="form-check-label" for="inlineRadio1">Male</label>
                         </div>
                         <div class="form-check form-check-inline">
-                          <input class="form-check-input" name="isMale" type="radio"  value="female" formControlName="isMale">
+                          <input class="form-check-input" name="isMale" type="radio"  [value]=false formControlName="isMale">
                           <label class="form-check-label" for="inlineRadio2">Female</label>
                         </div>
                   </div>
