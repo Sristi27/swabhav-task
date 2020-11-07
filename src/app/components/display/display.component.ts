@@ -49,7 +49,7 @@ export class DisplayComponent implements OnInit {
           Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
         ]
       }),
-      isMale: new FormControl({ validators: [Validators.required] }),
+      isMale: new FormControl('',{ validators: [Validators.required] }),
 
     });
   }
@@ -72,6 +72,12 @@ export class DisplayComponent implements OnInit {
           console.log(err)
         }
       )
+  }
+
+
+  onClose()
+  {
+    this.form.reset();
   }
 
   deleteId(id: string) {
@@ -157,17 +163,21 @@ export class DisplayComponent implements OnInit {
         }
       )
    }
-   else{
+   else if(this.form.get('isMale').value=="female"){
      this.form.patchValue(
        {
          'isMale':false
        }
      )
-   }
+     }
+   
+
    const student:Student = this.form.value;
    console.log(student)
    this.data.addStudent(student).subscribe(data=>
     {
+
+      this.form.reset();
       alert("Student added successfuly");
       this.getStudents();
     }
