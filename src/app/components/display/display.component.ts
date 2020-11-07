@@ -95,6 +95,8 @@ export class DisplayComponent implements OnInit {
     this.data.deleteStudent(this.delete_ID).subscribe(
       data=>
       {
+
+      alert("Student deleted successfuly");
         this.getStudents();
       },
       err=>
