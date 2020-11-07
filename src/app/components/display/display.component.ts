@@ -106,12 +106,17 @@ export class DisplayComponent implements OnInit {
     {
       this.data.getStudentById(this.upadte_ID).subscribe(data => {
       
+        if(data[0].isMale==true)
+        this.male="male"
+        else
+        this.male="female"
+
         this.form.setValue(
           {
             name:data[0].name,
             age:data[0].age,
             email:data[0].email,
-            isMale:data[0].isMale,
+            isMale:this.male,
             rollNo:data[0].rollNo,
             date:data[0].date,
             id:this.upadte_ID
@@ -131,6 +136,7 @@ export class DisplayComponent implements OnInit {
     this.data.updateStudent(student).subscribe(
       data => {
         this.form.reset();
+        alert("Student updated successfuly");
         this.getStudents();
 
       },
@@ -139,19 +145,36 @@ export class DisplayComponent implements OnInit {
       })
   }
 
-  public onAdd()
+  public onAddStudent()
   
  {
    console.log(this.form.value)
+   if(this.form.get('isMale').value=="male")
+   {
+      this.form.patchValue(
+        {
+          'isMale':true
+        }
+      )
+   }
+   else{
+     this.form.patchValue(
+       {
+         'isMale':false
+       }
+     )
+   }
    const student:Student = this.form.value;
    console.log(student)
    this.data.addStudent(student).subscribe(data=>
     {
+      alert("Student added successfuly");
       this.getStudents();
     }
     ,
       err=>
       {
+        alert(err)
         console.log(err)
       })
  
