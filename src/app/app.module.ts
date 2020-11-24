@@ -8,12 +8,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DisplayComponent } from './components/display/display.component';
 import { HeaderComponent } from './components/header/header.component';
+import { UploadComponent } from './components/upload/upload.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DisplayComponent,
-    HeaderComponent
+    HeaderComponent,
+    UploadComponent
   ],
   imports: [
     BrowserModule,
